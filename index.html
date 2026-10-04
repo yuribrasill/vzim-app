@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#4b0b8f">
+
+  <title>VZIM — Instale no seu celular</title>
+  <meta name="description" content="Tenha o VZIM no seu celular. Baixe para Android ou acesse pelo iPhone.">
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      color: #fff;
+      background:
+        radial-gradient(circle at -5% 10%, #9b22ff 0 12%, transparent 28%),
+        radial-gradient(circle at 105% 88%, #d315ff 0 10%, transparent 28%),
+        radial-gradient(circle at 70% 25%, rgba(170, 48, 255, .28), transparent 30%),
+        linear-gradient(150deg, #30105f 0%, #4d0d8f 48%, #320063 100%);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 24px;
+      overflow-x: hidden;
+    }
+
+    body::before,
+    body::after {
+      content: "";
+      position: fixed;
+      width: 420px;
+      height: 420px;
+      border: 3px solid rgba(255, 37, 160, .55);
+      border-radius: 45% 55% 60% 40%;
+      pointer-events: none;
+    }
+
+    body::before {
+      top: -280px;
+      left: -160px;
+      transform: rotate(30deg);
+    }
+
+    body::after {
+      bottom: -300px;
+      right: -180px;
+      transform: rotate(-25deg);
+    }
+
+    .container {
+      width: 100%;
+      max-width: 460px;
+      text-align: center;
+      position: relative;
+      z-index: 2;
+    }
+
+    .logo {
+      font-size: 64px;
+      font-weight: 900;
+      letter-spacing: -5px;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .smile {
+      width: 66px;
+      height: 20px;
+      border-bottom: 9px solid #ff168f;
+      border-radius: 0 0 60px 60px;
+      margin: 0 auto 42px;
+    }
+
+    h1 {
+      font-size: clamp(30px, 8vw, 42px);
+      line-height: 1.08;
+      letter-spacing: -1.3px;
+      margin-bottom: 15px;
+    }
+
+    .subtitle {
+      font-size: 17px;
+      line-height: 1.5;
+      color: rgba(255,255,255,.82);
+      margin: 0 auto 30px;
+      max-width: 390px;
+    }
+
+    .card {
+      background: rgba(255,255,255,.10);
+      border: 1px solid rgba(255,255,255,.16);
+      border-radius: 28px;
+      padding: 24px;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      box-shadow: 0 20px 50px rgba(20,0,45,.25);
+    }
+
+    .device {
+      font-size: 13px;
+      font-weight: 700;
+      color: #ff72c0;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      margin-bottom: 10px;
+    }
+
+    .btn {
+      display: block;
+      width: 100%;
+      padding: 17px 20px;
+      margin-top: 12px;
+      border-radius: 16px;
+      text-decoration: none;
+      font-weight: 800;
+      font-size: 16px;
+      transition: transform .2s ease;
+    }
+
+    .btn:active {
+      transform: scale(.98);
+    }
+
+    .primary {
+      background: linear-gradient(90deg, #ff168f, #d616d9);
+      color: #fff;
+      box-shadow: 0 10px 25px rgba(255, 22, 143, .25);
+    }
+
+    .secondary {
+      background: rgba(255,255,255,.12);
+      color: #fff;
+      border: 1px solid rgba(255,255,255,.18);
+    }
+
+    .steps {
+      text-align: left;
+      margin-top: 22px;
+      padding: 18px;
+      background: rgba(20,0,50,.20);
+      border-radius: 18px;
+      color: rgba(255,255,255,.82);
+      font-size: 14px;
+      line-height: 1.65;
+    }
+
+    .steps strong {
+      color: #fff;
+    }
+
+    footer {
+      margin-top: 25px;
+      font-size: 12px;
+      color: rgba(255,255,255,.55);
+    }
+  </style>
+</head>
+
+<body>
+
+  <main class="container">
+
+    <div class="logo">VZIM</div>
+    <div class="smile"></div>
+
+    <h1 id="title">Tenha o VZIM no seu celular</h1>
+
+    <p class="subtitle" id="subtitle">
+      Conecte-se aos negócios perto de você, acumule benefícios e aproveite tudo que o VZIM oferece.
+    </p>
+
+    <section class="card">
+
+      <div class="device" id="device">VZIM</div>
+
+      <div id="actions"></div>
+      <div id="help"></div>
+
+    </section>
+
+    <footer>
+      VZIM • Mais perto. Mais vantagens.
+    </footer>
+
+  </main>
+
+  <script>
+    const androidDownload =
+      "https://github.com/yuribrasill/vzim-app/releases/download/v1.0.0/VZIM-signed.apk";
+
+    const vzimWeb =
+      "https://vzim.base44.app";
+
+    const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+
+    const isAndroid = /android/i.test(userAgent);
+
+    const isIOS =
+      /iPad|iPhone|iPod/.test(userAgent) ||
+      (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+
+    const title = document.getElementById("title");
+    const subtitle = document.getElementById("subtitle");
+    const device = document.getElementById("device");
+    const actions = document.getElementById("actions");
+    const help = document.getElementById("help");
+
+    if (isAndroid) {
+
+      device.textContent = "Android detectado";
+      title.textContent = "Instale o VZIM no seu Android";
+
+      subtitle.textContent =
+        "Baixe a versão oficial do VZIM e tenha acesso direto pelo seu celular.";
+
+      actions.innerHTML = `
+        <a class="btn primary" href="${androidDownload}">
+          Baixar VZIM
+        </a>
+
+        <a class="btn secondary" href="${vzimWeb}">
+          Acessar pelo navegador
+        </a>
+      `;
+
+      help.innerHTML = `
+        <div class="steps">
+          <strong>Como instalar:</strong><br>
+          1. Toque em <strong>Baixar VZIM</strong>.<br>
+          2. Abra o arquivo baixado.<br>
+          3. Se o Android solicitar, autorize a instalação desta fonte.<br>
+          4. Conclua a instalação e abra o VZIM.
+        </div>
+      `;
+
+    } else if (isIOS) {
+
+      device.textContent = "iPhone detectado";
+      title.textContent = "Tenha o VZIM no seu iPhone";
+
+      subtitle.textContent =
+        "Abra o VZIM pelo Safari e adicione o aplicativo à sua Tela de Início.";
+
+      actions.innerHTML = `
+        <a class="btn primary" href="${vzimWeb}">
+          Abrir VZIM
+        </a>
+      `;
+
+      help.innerHTML = `
+        <div class="steps">
+          <strong>Coloque o VZIM na Tela de Início:</strong><br>
+          1. Toque em <strong>Abrir VZIM</strong>.<br>
+          2. No Safari, toque em <strong>Compartilhar</strong>.<br>
+          3. Escolha <strong>Adicionar à Tela de Início</strong>.<br>
+          4. Toque em <strong>Adicionar</strong>.
+        </div>
+      `;
+
+    } else {
+
+      device.textContent = "Acesse o VZIM";
+
+      actions.innerHTML = `
+        <a class="btn primary" href="${vzimWeb}">
+          Acessar VZIM
+        </a>
+
+        <a class="btn secondary" href="${androidDownload}">
+          Baixar para Android
+        </a>
+      `;
+
+    }
+  </script>
+
+</body>
+</html>
